@@ -6,9 +6,10 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.core.Response;
-
+import org.acme.util.BodyRequestDosKeys;
+import org.acme.util.BodyRequestTresKeys;
+import org.acme.util.BodyRequestUnaKey;
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,33 +57,32 @@ public class Obtener {
 
     //Obtener catalogo desde con una llave foranea
     @POST
-    @Path("obtener/{catalogo}")
-    public Response obtener_Catalogo_Desde_llave(@PathParam("catalogo") String catalogo, String llave_condicion, String valor_condicion){
+    @Path("obtenerDesdeLlave/{catalogo}")
+    public Response obtener_Catalogo_Desde_llave(@PathParam("catalogo") String catalogo, BodyRequestUnaKey body){
         return getDatos("SELECT * FROM "+ catalogo
-                + "WHERE "+ llave_condicion
-                + " = " + valor_condicion);
+                + "WHERE "+ body.getLlaveForanea()
+                + " = " + body.getValorLLaveForanea());
     }
 
-    public Response obtener_Catalogo_Desde_llave(String catalogo, String llave_condicion1, String valor_condicion1,
-                                                 String llave_condicion2, String valor_condicion2){
+    @POST
+    @Path("obtenerDesdeLlave2/{catalogo}")
+    public Response obtener_Catalogo_Desde_llave(@PathParam("catalogo") String catalogo, BodyRequestDosKeys body){
         return getDatos("SELECT * FROM "+ catalogo
-            + "WHERE "+ llave_condicion1
-            + " = " + valor_condicion1
-            + "AND " + llave_condicion2
-            + " = " + valor_condicion2);
+            + "WHERE "+ body.getLlaveForanea()
+            + " = " + body.getValorLLaveForanea()
+            + "AND " + body.getLlaveForanea2()
+            + " = " + body.getValorLLaveForanea2());
     }
-
-    public Response obtener_Catalogo_Desde_llave(String catalogo, String llave_condicion1, String valor_condicion1,
-                                                 String llave_condicion2, String valor_condicion2,
-                                                 String llave_condicion3, String valor_condicion3){
+    @POST
+    @Path("obtenerDesdeLlave3/{catalogo}")
+    public Response obtener_Catalogo_Desde_llave(@PathParam("catalogo") String catalogo, BodyRequestTresKeys body){
         return getDatos("SELECT * FROM "+ catalogo
-            + "WHERE "+ llave_condicion1
-            + " = " + valor_condicion1
-            + "AND " + llave_condicion2
-            + " = " + valor_condicion2
-            + "AND " +llave_condicion3
-            + " = " + valor_condicion3
-        );
+            + "WHERE "+ body.getLlaveForanea()
+            + " = " + body.getValorLLaveForanea()
+            + "AND " + body.getLlaveForanea2()
+            + " = " + body.getValorLLaveForanea2()
+            + "AND " +body.getLlaveForanea3()
+            + " = " + body.getValorLLaveForanea3());
     }
 
     // OO metodo por metodo
